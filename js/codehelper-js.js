@@ -47,20 +47,21 @@ codeHelperJS = {
     },
 
     storageHelper: function(root) {
-        get = function() {
-            var data = JSON.parse(
-                (localStorage[root] !== undefined && localStorage[root] != "undefined") ? localStorage[root] : '{}'
-            );
-            return codeHelperJS.getArrayValue(data, codeHelperJS.path);
+        return {
+            get: function() {
+                var data = JSON.parse(
+                    (localStorage[root] !== undefined && localStorage[root] != "undefined") ? localStorage[root] : '{}'
+                );
+                return codeHelperJS.getArrayValue(data, codeHelperJS.path);
+            },
+            set: function(path, value) {
+                var data = JSON.parse(
+                    (localStorage[root] !== undefined && localStorage[root] != "undefined") ? localStorage[root] : '{}'
+                );
+                codeHelperJS.setArrayValue(data, path, value);
+                localStorage[root] = JSON.stringify(data);
+            }
         };
-        set = function(path, value) {
-            var data = JSON.parse(
-                (localStorage[root] !== undefined && localStorage[root] != "undefined") ? localStorage[root] : '{}'
-            );
-            codeHelperJS.setArrayValue(data, path, value);
-            localStorage[root] = JSON.stringify(data);
-        };
-        return self;
     },
 
     storageAccess: function(root) {
@@ -80,6 +81,7 @@ codeHelperJS = {
             apply(arg, thisArg, argumentsList) {
                 var last = codeHelperJS.path.splice(-1,1);
                 if (last == 'get') {
+                    console.log(codeHelperJS.storage);
                     result = codeHelperJS.storage.get();
                     codeHelperJS.path = [];
                     return result;
