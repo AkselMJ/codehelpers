@@ -81,7 +81,6 @@ codeHelperJS = {
             apply(arg, thisArg, argumentsList) {
                 var last = codeHelperJS.path.splice(-1,1);
                 if (last == 'get') {
-                    console.log(codeHelperJS.storage);
                     result = codeHelperJS.storage.get();
                     codeHelperJS.path = [];
                     return result;
