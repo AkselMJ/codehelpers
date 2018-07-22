@@ -48,11 +48,11 @@ codeHelperJS = {
 
     storageHelper: function(root) {
         return {
-            get: function() {
+            get: function(path) {
                 var data = JSON.parse(
                     (localStorage[root] !== undefined && localStorage[root] != "undefined") ? localStorage[root] : '{}'
                 );
-                return codeHelperJS.getArrayValue(data, codeHelperJS.path);
+                return codeHelperJS.getArrayValue(data, path);
             },
             set: function(path, value) {
                 var data = JSON.parse(
@@ -81,7 +81,7 @@ codeHelperJS = {
             apply(arg, thisArg, argumentsList) {
                 var last = codeHelperJS.path.splice(-1,1);
                 if (last == 'get') {
-                    result = codeHelperJS.storage.get();
+                    result = codeHelperJS.storage.get(codeHelperJS.path);
                     codeHelperJS.path = [];
                     return result;
                 } else if (last == 'set') {
